@@ -5,9 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 public class SecureData
 {   
-    private IDataProtector _protector;
+    private IDataProtector? _protector;
     
-    public SecureData(IDataProtectionProvider provider)
+    public SecureData(IDataProtectionProvider? provider)
     {
+        _protector = provider?.CreateProtector(GetType().FullName);
     }
 }
