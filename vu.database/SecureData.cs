@@ -1,4 +1,5 @@
-using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.Data;
+using System.Reflection;
 
 namespace vu.database;
 
@@ -16,7 +17,12 @@ public class SecureData
 
     public static bool CheckIfSecure(object? model)
     {
-        string fullName = model?.GetType().FullName;
-        return false;
+        var fullName = model?.GetType().FullName;
+        var name = model?.GetType().Name;
+        var domain = fullName.Replace(name, "");
+        if (domain != "vu.database.model.") throw new DataException("Not in model domain: " + fullName);
+        var a = model?.GetType().GetCustomAttribute<SecureAttribute>();
+        if (a == null) return false;
+        return true;
     }
 }

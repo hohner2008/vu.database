@@ -10,6 +10,7 @@ public class TestSecureData
     void TestCheckIfSecure()
     {
         var user = new User { Name = "test", Password = "test" };
-        SecureData.CheckIfSecure(user);
+        var ifsecure = SecureData.CheckIfSecure(user);
+        Assert.True(ifsecure);
     }
 }
